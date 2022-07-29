@@ -3,12 +3,14 @@ package bot
 import (
 	"log"
 
+	"github.com/DiasOrazbaev/CodeforcesBot/internal/app/store"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 type Bot struct {
 	config *Config
 	bot    *tgbotapi.BotAPI
+	store  *store.Store
 }
 
 func NewBot(config *Config) *Bot {
@@ -22,7 +24,21 @@ func (b *Bot) Start() error {
 	}
 	b.bot = bot
 	log.Println("Authorized on account " + b.bot.Self.UserName)
+	log.Println("Start configure store")
+	if err := b.configureStore(); err != nil {
+		return err
+	}
+
 	b.configureHandles()
+	return nil
+}
+
+func (b *Bot) configureStore() error {
+	st := store.NewStore(b.config.storeConfig)
+	if err := st.Open(); err != nil {
+		return err
+	}
+	b.store = st
 	return nil
 }
 
