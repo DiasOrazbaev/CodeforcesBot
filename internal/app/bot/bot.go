@@ -28,8 +28,14 @@ func (b *Bot) Start() error {
 	if err := b.configureStore(); err != nil {
 		return err
 	}
-
+	log.Println("Store configured successfully")
+	log.Println("Start migrations")
+	if err := b.store.MigrationUp(); err != nil {
+		log.Fatalln("Failed on migrations: ", err)
+	}
+	log.Println("Migration do successfully")
 	b.configureHandles()
+
 	return nil
 }
 
