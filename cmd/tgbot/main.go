@@ -25,4 +25,8 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	bot := bot.NewBot(config)
+	if err := bot.Start(); err != nil {
+		log.Fatalln(err)
+	}
 }
