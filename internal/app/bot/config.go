@@ -4,6 +4,6 @@ type Config struct {
 	BotToken string `toml:"bot_token"`
 }
 
-func New() *Config {
+func NewConfig() *Config {
 	return &Config{}
 }

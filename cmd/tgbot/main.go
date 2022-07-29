@@ -19,7 +19,7 @@ func init() {
 func main() {
 	flag.Parse()
 
-	config := bot.New()
+	config := bot.NewConfig()
 
 	_, err := toml.DecodeFile(configPath, config)
 	if err != nil {
